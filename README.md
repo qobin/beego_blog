@@ -8,16 +8,15 @@
 
     $ export GOPATH=/path/to/
 
-
 2 . 下载安装
-        
+
     $ go get beego.blog
 
->  我们使用版本是beego 1.** 版本的，建议是用 升级 go get -u github.com/astaxie/beego
+> 我们使用版本是beego 1.** 版本的，建议是用 升级 go get -u github.com/astaxie/beego
 
 4 . 加入数据库
 
-   mysql 新建db_beego数据库把根目录 db_beego.sql 导入
+mysql 新建db_beego数据库把根目录 db_beego.sql 导入
 
 5 . 修改 app.conf 配置
 
@@ -39,27 +38,23 @@
     #MYSQL表前缀
     dbprefix = tb_
 
- 6 . 运行
+6 . 运行
 
     cd 到 beego_blog 目录 执行
     $ bee run
 
- 7 . 浏览器演示
+7 . 浏览器演示
 
 http://localhost:8099 (前台)
 
 http://localhost:8099/admin/login (后台)
 
-
-
-
-
     账号： admin  密码 :123456
 
- 8 . 联系方式
+8 . 联系方式
 
-  qq:313690636
-  
-  qq群： 571627871
+qq:313690636
+
+qq群： 571627871
 
 

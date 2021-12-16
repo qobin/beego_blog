@@ -15,7 +15,7 @@
         <div class="layui-input-block">
             <select name="cate_id" lay-verify="required">
                 {{range .categorys}}
-                <option value="{{.Id}}" >{{.Name}}</option>
+                <option value="{{.Id}}">{{.Name}}</option>
                 {{end}}
             </select>
         </div>
@@ -59,28 +59,28 @@
         <td>{{.Title}}</td>
         <td>{{.Created}}</td>
         <td>
-            {{range  $elem := $.categorys }}
-                {{if eq $elem.Id  $o.CategoryId}}
-                    {{$elem.Name}}
-                {{end}}
+            {{range $elem := $.categorys }}
+            {{if eq $elem.Id $o.CategoryId}}
+            {{$elem.Name}}
+            {{end}}
             {{end}}
         </td>
         <td>
             {{if .IsTop}}
             <i class="icon-arrow-up" title="置顶" style="color: blue">置顶 </i>
             {{else}}
-                普通
+            普通
             {{end}}
         </td>
         <td>
             {{.Views}}
         </td>
         <td>
-            <a href="/admin/article?id={{.Id}}" >
+            <a href="/admin/article?id={{.Id}}">
                 <i class="layui-icon">&#xe642;</i> 修改
             </a>
-            {{if ne  .CategoryId 1}}
-            <a href="javascript:void(0)" onclick="del({{.Id}})"  >
+            {{if ne .CategoryId 1}}
+            <a href="javascript:void(0)" onclick="del({{.Id}})">
                 <i class="layui-icon">&#x1006;</i> 删除
             </a>
             {{end}}
@@ -112,12 +112,10 @@
         location.href = "/admin/article"
     }
 
-    function del(id)
-    {
-        if(confirm("确定要删除吗？"))
-        {
-            var url = "/admin/delete.html?id="+id;
-            window.location.href=url;
+    function del(id) {
+        if (confirm("确定要删除吗？")) {
+            var url = "/admin/delete.html?id=" + id;
+            window.location.href = url;
         }
     }
 

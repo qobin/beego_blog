@@ -1,5 +1,5 @@
 (function () {
-    var URL = window.UEDITOR_HOME_URL || (function(){
+    var URL = window.UEDITOR_HOME_URL || (function () {
         function PathStack() {
             this.documentURL = self.document.URL || self.location.href;
             this.separator = '/';
@@ -8,82 +8,82 @@
             this.currentDirPattern = /^[.]\/]/;
             this.path = this.documentURL;
             this.stack = [];
-            this.push( this.documentURL );
+            this.push(this.documentURL);
         }
 
-        PathStack.isParentPath = function( path ){
+        PathStack.isParentPath = function (path) {
             return path === '..';
         };
 
-        PathStack.hasProtocol = function( path ){
-            return !!PathStack.getProtocol( path );
+        PathStack.hasProtocol = function (path) {
+            return !!PathStack.getProtocol(path);
         };
 
-        PathStack.getProtocol = function( path ){
+        PathStack.getProtocol = function (path) {
 
-            var protocol = /^[^:]*:\/*/.exec( path );
+            var protocol = /^[^:]*:\/*/.exec(path);
 
             return protocol ? protocol[0] : null;
 
         };
 
         PathStack.prototype = {
-            push: function( path ){
+            push: function (path) {
 
                 this.path = path;
 
-                update.call( this );
-                parse.call( this );
+                update.call(this);
+                parse.call(this);
 
                 return this;
 
             },
-            getPath: function(){
+            getPath: function () {
                 return this + "";
             },
-            toString: function(){
-                return this.protocol + ( this.stack.concat( [''] ) ).join( this.separator );
+            toString: function () {
+                return this.protocol + (this.stack.concat([''])).join(this.separator);
             }
         };
 
         function update() {
 
-            var protocol = PathStack.getProtocol( this.path || '' );
+            var protocol = PathStack.getProtocol(this.path || '');
 
-            if( protocol ) {
+            if (protocol) {
 
                 //根协议
                 this.protocol = protocol;
 
                 //local
-                this.localSeparator = /\\|\//.exec( this.path.replace( protocol, '' ) )[0];
+                this.localSeparator = /\\|\//.exec(this.path.replace(protocol, ''))[0];
 
                 this.stack = [];
             } else {
-                protocol = /\\|\//.exec( this.path );
+                protocol = /\\|\//.exec(this.path);
                 protocol && (this.localSeparator = protocol[0]);
             }
 
         }
 
-        function parse(){
+        function parse() {
 
-            var parsedStack = this.path.replace( this.currentDirPattern, '' );
+            var parsedStack = this.path.replace(this.currentDirPattern, '');
 
-            if( PathStack.hasProtocol( this.path ) ) {
-                parsedStack = parsedStack.replace( this.protocol , '');
+            if (PathStack.hasProtocol(this.path)) {
+                parsedStack = parsedStack.replace(this.protocol, '');
             }
 
-            parsedStack = parsedStack.split( this.localSeparator );
+            parsedStack = parsedStack.split(this.localSeparator);
             parsedStack.length = parsedStack.length - 1;
 
-            for(var i= 0,tempPath,l=parsedStack.length,root = this.stack;i<l;i++){
+            for (var i = 0, tempPath, l = parsedStack.length, root = this.stack; i < l; i++) {
                 tempPath = parsedStack[i];
-                if(tempPath){
-                    if( PathStack.isParentPath( tempPath ) ) {
+                if (tempPath) {
+                    if (PathStack.isParentPath(tempPath)) {
                         root.pop();
                     } else {
-                        root.push( tempPath );
+                        root.push(tempPath);
                     }
                 }
 
@@ -94,9 +94,9 @@
 
         var currentPath = document.getElementsByTagName('script');
 
-        currentPath = currentPath[ currentPath.length -1 ].src;
+        currentPath = currentPath[currentPath.length - 1].src;
 
-        return new PathStack().push( currentPath ) + "";
+        return new PathStack().push(currentPath) + "";
 
 
     })();
@@ -107,39 +107,53 @@
     window.UEDITOR_CONFIG = {
 
         //为编辑器实例添加一个路径，这个不能被注释
-        UEDITOR_HOME_URL : URL
+        UEDITOR_HOME_URL: URL
 
         //图片上传配置区
-        ,imageUrl:URL+"php/imageUp.php"             //图片上传提交地址
-        ,imagePath:URL + "php/"                     //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
+        ,
+        imageUrl: URL + "php/imageUp.php"             //图片上传提交地址
+        ,
+        imagePath: URL + "php/"                     //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
         //,imageFieldName:"upfile"                   //图片数据的key,若此处修改，需要在后台对应文件修改对应参数
         //,compressSide:0                            //等比压缩的基准，确定maxImageSideLength参数的参照对象。0为按照最长边，1为按照宽度，2为按照高度
         //,maxImageSideLength:900                    //上传图片最大允许的边长，超过会自动等比缩放,不缩放就设置一个比较大的值，更多设置在image.html中
 
         //附件上传配置区
-        ,fileUrl:URL+"php/fileUp.php"               //附件上传提交地址
-        ,filePath:URL + "php/"                   //附件修正地址，同imagePath
+        ,
+        fileUrl: URL + "php/fileUp.php"               //附件上传提交地址
+        ,
+        filePath: URL + "php/"                   //附件修正地址，同imagePath
         //,fileFieldName:"upfile"                    //附件提交的表单名，若此处修改，需要在后台对应文件修改对应参数
 
         //图片在线管理配置区
-        ,imageManagerUrl:URL + "php/imageManager.php"       //图片在线管理的处理地址
-        ,imageManagerPath:URL + "php/"                                    //图片修正地址，同imagePath
+        ,
+        imageManagerUrl: URL + "php/imageManager.php"       //图片在线管理的处理地址
+        ,
+        imageManagerPath: URL + "php/"                                    //图片修正地址，同imagePath
 
         //屏幕截图配置区
-        ,snapscreenHost: location.hostname                                 //屏幕截图的server端文件所在的网站地址或者ip，请不要加http://
-        ,snapscreenServerUrl: URL +"php/imageUp.php" //屏幕截图的server端保存程序，UEditor的范例代码为“URL +"server/upload/php/snapImgUp.php"”
-        ,snapscreenPath: URL + "php/"
-        ,snapscreenServerPort: location.port                                   //屏幕截图的server端端口
+        ,
+        snapscreenHost: location.hostname                                 //屏幕截图的server端文件所在的网站地址或者ip，请不要加http://
+        ,
+        snapscreenServerUrl: URL + "php/imageUp.php" //屏幕截图的server端保存程序，UEditor的范例代码为“URL +"server/upload/php/snapImgUp.php"”
+        ,
+        snapscreenPath: URL + "php/"
+        ,
+        snapscreenServerPort: location.port                                   //屏幕截图的server端端口
         //,snapscreenImgAlign: ''                                //截图的图片默认的排版方式
 
         //获取视频数据的地址
-        ,getMovieUrl:URL+"php/getMovie.php"                   //视频数据获取地址
+        ,
+        getMovieUrl: URL + "php/getMovie.php"                   //视频数据获取地址
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
-        
-        , toolbars: [["fullscreen","source","undo","redo","insertunorderedlist","insertorderedlist","unlink","link","insertimage","insertvideo","attachment","horizontal","spechars","template","|","bold","italic","underline","strikethrough","forecolor","backcolor","superscript","subscript","justifyleft","justifycenter","justifyjustify","justifyright","indent","removeformat","formatmatch","autotypeset","pagebreak","customstyle","paragraph","rowspacingbottom","rowspacingtop","lineheight","fontfamily","fontsize","insertcode","inserttable","deletetable",'map', 'gmap',"preview"],[]]
-        ,lang:"zh-cn"
-        ,wordCount:0
+
+        ,
+        toolbars: [["fullscreen", "source", "undo", "redo", "insertunorderedlist", "insertorderedlist", "unlink", "link", "insertimage", "insertvideo", "attachment", "horizontal", "spechars", "template", "|", "bold", "italic", "underline", "strikethrough", "forecolor", "backcolor", "superscript", "subscript", "justifyleft", "justifycenter", "justifyjustify", "justifyright", "indent", "removeformat", "formatmatch", "autotypeset", "pagebreak", "customstyle", "paragraph", "rowspacingbottom", "rowspacingtop", "lineheight", "fontfamily", "fontsize", "insertcode", "inserttable", "deletetable", 'map', 'gmap', "preview"], []]
+        ,
+        lang: "zh-cn"
+        ,
+        wordCount: 0
         //主题配置项,默认是default。有需要的话也可以使用如下这样的方式来自动多主题切换，当然，前提条件是themes文件夹下存在对应的主题文件：
         //现有如下皮肤:default
         //,theme:'default'
@@ -178,7 +192,8 @@
         //,imagePopup:true      //图片操作的浮层开关，默认打开
 
         //如果自定义，最好给p标签如下的行高，要不输入中文时，会有跳动感
-        ,initialStyle:'p{line-height:1.5em;margin:1em 0;font-size:14px}'//编辑器层级的基数,可以用来改变字体等
+        ,
+        initialStyle: 'p{line-height:1.5em;margin:1em 0;font-size:14px}'//编辑器层级的基数,可以用来改变字体等
 
         //,autoSyncData:true //自动同步编辑器要提交的数据
         //,emotionLocalization:false //是否开启表情本地化，默认关闭。若要开启请确保emotion文件夹下包含官网提供的images表情文件夹
