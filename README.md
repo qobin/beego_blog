@@ -11,7 +11,7 @@
 
 2 . 下载安装
         
-    $ go get github.com/Echosong/beego_blog
+    $ go get beego.blog
 
 >  我们使用版本是beego 1.** 版本的，建议是用 升级 go get -u github.com/astaxie/beego
 

@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"github.com/Echosong/beego_blog/models"
-	"github.com/Echosong/beego_blog/util"
 	"time"
+
+	"beego.blog/models"
+	"beego.blog/util"
 )
 
 type BlogController struct {

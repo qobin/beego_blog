@@ -1,10 +1,11 @@
 package controllers
 
 import (
-	"github.com/Echosong/beego_blog/models"
+	"strings"
+
+	"beego.blog/models"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"strings"
 )
 
 type baseController struct {
